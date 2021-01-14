@@ -67,13 +67,14 @@ export default {
       let upRoom = response.data;
       let index = this.rooms.findIndex(room => room.id === upRoom.id);
       this.rooms[index].name = upRoom.name;
-      Vue.$toast.info('Name Updated!')
+      Vue.$toast.success('Name Updated!')
     },
     async submitForm(room) {
       console.log(room);
       let response = await axios.post(`${API_HOST}/api/rooms`,room);
       let newRoom = response.data;
       this.rooms.push(newRoom);
+      Vue.$toast.success('New Room Created!')
     }
   }
 }
