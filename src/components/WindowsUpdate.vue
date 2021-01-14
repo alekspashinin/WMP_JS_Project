@@ -1,9 +1,9 @@
 <template>
-  <form @submit="submitForm" method="post">
+  <form @submit="submitForm"method="post">
     <h3>Rename Windows</h3>
     <label for="window-id">Window :</label>
     <select class="select2 w-100" id="window-id" name="window-id" v-model="windowId">
-      <option v-for="window in windowsx" :value="window.id">{{ window.name }}</option>
+      <option v-for="window in windowsx" :value="window.id" @form-submitted="updateName">{{ window.name }}</option>
     </select>
     <br>
 
@@ -53,6 +53,16 @@ export default {
       this.$emit('form-submitted', winData);
       let index = this.windowsx.findIndex(window => window.id === this.windowId);
       this.windowsx[index].name = winData.name;
+    },
+    async UpdateList(newWindow){
+      let response = await axios.get(`${API_HOST}/api/windows`);
+      let windowsx = response.data;
+      this.windowsx = windowsx;
+    },
+    async updateName(winData) {
+      let response = await axios.get(`${API_HOST}/api/windows`);
+      let windowsx = response.data;
+      this.windowsx = windowsx;
     }
   }
 }

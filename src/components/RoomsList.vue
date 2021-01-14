@@ -61,20 +61,22 @@ export default {
     deleteRoom(id) {
       let index = this.rooms.findIndex(room => room.id === id);
       this.rooms.splice(index, 1);
+        this.$children[1].UpdateList();
     },
     async updateName(roomData) {
       let response = await axios.put(`${API_HOST}/api/rooms/${roomData.id}/updateName/${roomData.name}`);
       let upRoom = response.data;
       let index = this.rooms.findIndex(room => room.id === upRoom.id);
       this.rooms[index].name = upRoom.name;
-      Vue.$toast.success('Name Updated!')
+      Vue.$toast.info('Name Updated!')
     },
     async submitForm(room) {
       console.log(room);
       let response = await axios.post(`${API_HOST}/api/rooms`,room);
       let newRoom = response.data;
       this.rooms.push(newRoom);
-      Vue.$toast.success('New Room Created!')
+      this.$children[1].UpdateList();
+      //Vue.$toast.success('New Room Created!')
     }
   }
 }

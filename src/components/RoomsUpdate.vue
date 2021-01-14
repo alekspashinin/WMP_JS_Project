@@ -46,7 +46,6 @@ export default {
     let response = await axios.get(`${API_HOST}/api/rooms`);
     let roomsx = response.data;
     this.roomsx = roomsx;
-    //Vue.$toast.info('List of Rooms Charged')
   },
   methods: {
     openModal() {
@@ -60,6 +59,11 @@ export default {
       this.$emit('form-submitted', roomData);
       let index = this.roomsx.findIndex(room => room.id === this.roomId);
       this.roomsx[index].name = roomData.name;
+    },
+    async UpdateList(newWindow){
+      let response = await axios.get(`${API_HOST}/api/rooms`);
+      let roomsx = response.data;
+      this.roomsx = roomsx;
     }
   }
 }

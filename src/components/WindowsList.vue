@@ -51,7 +51,8 @@ export default {
   name: 'WindowsList',
   data: function() {
     return {
-      windows: []
+      windows: [],
+      sharedItems: WindowsUpdate.windowsx
     }
   },
   created: async function() {
@@ -59,12 +60,13 @@ export default {
     let windows = response.data;
     this.windows = windows;
     Vue.$toast.info('List of Windows Charged');
+    WindowsUpdate.created();
   },
   methods: {
     deleteWindow(id) {
-    console.log(id)
       let index = this.windows.findIndex(window => window.id === id);
       this.windows.splice(index, 1);
+      this.$children[1].UpdateList();
     },
     updateWindow(newWindow) {
       let index = this.windows.findIndex(window => window.id === newWindow.id);
@@ -89,6 +91,7 @@ export default {
       // eslint-disable-next-line no-empty
       if(newWindow.id) {
         Vue.$toast.success('Success!')
+        this.$children[1].UpdateList();
       }
       else{
         Vue.$toast.error('Error!');
