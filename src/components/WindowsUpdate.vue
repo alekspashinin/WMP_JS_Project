@@ -3,7 +3,7 @@
     <h3>Rename Windows</h3>
     <label for="window-id">Window :</label>
     <select class="select2 w-100" id="window-id" name="window-id" v-model="windowId">
-      <option v-for="window in windows" :value="window.id">{{ window.name }}</option>
+      <option v-for="window in windowsx" :value="window.id">{{ window.name }}</option>
     </select>
     <br>
 
@@ -34,7 +34,7 @@ export default {
   name: 'WindowsUpdate',
   data: function() {
     return {
-      windows: [],
+      windowsx: [],
       windowId: '',
       roomId: '',
       windowNewName: ''
@@ -42,8 +42,8 @@ export default {
   },
   created: async function() {
     let response = await axios.get(`${API_HOST}/api/windows`);
-    let windows = response.data;
-    this.windows = windows;
+    let windowsx = response.data;
+    this.windowsx = windowsx;
   },
   methods: {
     submitForm: function(e) {
@@ -51,8 +51,8 @@ export default {
       let winData = {   "id": this.windowId,
                         "name": this.windowNewName};
       this.$emit('form-submitted', winData);
-      let index = this.windows.findIndex(window => window.id === this.windowId);
-      this.windows[index].name = winData.name;
+      let index = this.windowsx.findIndex(window => window.id === this.windowId);
+      this.windowsx[index].name = winData.name;
     }
   }
 }

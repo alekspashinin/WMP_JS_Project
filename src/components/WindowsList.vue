@@ -12,7 +12,7 @@
     <windows-list-item
         v-for="window in windows"
         :window="window"
-        :key="window.id"
+        :key="'999'+ window.id"
         @window-updated="updateWindow"
     >
     </windows-list-item>
@@ -79,8 +79,9 @@ export default {
       let response = await axios.post(`${API_HOST}/api/windows`,window);
       let newWindow = response.data;
       this.windows.push(newWindow);
+      console.log(newWindow)
       // eslint-disable-next-line no-empty
-      if(this.windows.push(newWindow)) {
+      if(newWindow.id) {
         Vue.$toast.success('Success!')
       }
       else{

@@ -4,7 +4,7 @@
     <label for="room-id">Room :</label>
 
     <select class="select2 w-100" id="room-id" name="room-id" v-model="roomId">
-      <option v-for="room in rooms" :value="room.id">{{ room.name }}</option>
+      <option v-for="room in roomsx" :value="room.id">{{ room.name }}</option>
     </select>
     <br>
 
@@ -36,7 +36,7 @@ export default {
   props: ['room'],
   data: function() {
     return {
-      rooms: [],
+      roomsx: [],
       roomId: '',
       floorId: '',
       roomName: ''
@@ -44,8 +44,8 @@ export default {
   },
   created: async function() {
     let response = await axios.get(`${API_HOST}/api/rooms`);
-    let rooms = response.data;
-    this.rooms = rooms;
+    let roomsx = response.data;
+    this.roomsx = roomsx;
     //Vue.$toast.info('List of Rooms Charged')
   },
   methods: {
@@ -58,8 +58,8 @@ export default {
                         "name": this.roomName};
       //console.log(roomData)
       this.$emit('form-submitted', roomData);
-      let index = this.rooms.findIndex(room => room.id === this.roomId);
-      this.rooms[index].name = roomData.name;
+      let index = this.roomsx.findIndex(room => room.id === this.roomId);
+      this.roomsx[index].name = roomData.name;
     }
   }
 }
