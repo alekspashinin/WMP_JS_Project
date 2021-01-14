@@ -51,7 +51,7 @@ export default {
                   "roomId": this.roomId
       };
       console.log(window)
-      this.$emit('form-submitted', window);
+      //this.$emit('form-submitted', window);
       if(this.$emit('form-submitted', window)) {
         Vue.$toast.success('Window Created');
       }
