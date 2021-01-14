@@ -20,7 +20,7 @@
     </div>
     <div class="col-md-3 center">
       <div class="card min-height">
-    <rooms-update @form-submitted="submitForm"></rooms-update>
+    <rooms-update @form-submitted="updateName"></rooms-update>
   </div>
     </div>
   </div>
@@ -61,6 +61,13 @@ export default {
     deleteRoom(id) {
       let index = this.rooms.findIndex(room => room.id === id);
       this.rooms.splice(index, 1);
+    },
+    async updateName(roomData) {
+      let response = await axios.put(`${API_HOST}/api/rooms/${roomData.id}/updateName/${roomData.name}`);
+      let upRoom = response.data;
+      let index = this.rooms.findIndex(room => room.id === upRoom.id);
+      this.rooms[index].name = upRoom.name;
+      Vue.$toast.info('Name Updated!')
     },
     async submitForm(room) {
       let response = await axios.post(`${API_HOST}/api/rooms`,room);

@@ -2,19 +2,19 @@
   <form @submit="submitForm" method="post">
     <h3>Rename Rooms</h3>
     <label for="room-id">Room :</label>
-    <select class="select2 w-100" id="room-id" name="room-id" v-model="roomId" :class="{expanded: isExpanded}">
-      <option value="1">Room 1</option>
-      <option value="2">Room 2</option>
-      <option value="3">Room 3</option>
+
+    <select class="select2 w-100" id="room-id" name="room-id" v-model="roomId">
+      <option v-for="room in rooms" :value="room.id">{{ room.name }}</option>
     </select>
     <br>
-    <label for="room-id">Floor :</label>
+
+    <!-- <label for="room-id">Floor :</label>
     <select class="select2 w-100" id="floor-id" name="floor-id" v-model="floorId">
       <option value="1">Floor 1</option>
       <option value="2">Floor 2</option>
       <option value="3">Floor 3</option>
     </select>
-    <br>
+    <br> -->
     <label for="room-name">New Room Name :</label>
     <input class="select2 w-100 text-center" type="text" id="room-name" name="room-name" v-model="roomName"><br>
     <br>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {API_HOST} from '../config';
 import Vue from 'vue'
 import VueToast from 'vue-toast-notification';
 
@@ -34,10 +36,17 @@ export default {
   props: ['room'],
   data: function() {
     return {
+      rooms: [],
       roomId: '',
       floorId: '',
       roomName: ''
     }
+  },
+  created: async function() {
+    let response = await axios.get(`${API_HOST}/api/rooms`);
+    let rooms = response.data;
+    this.rooms = rooms;
+    //Vue.$toast.info('List of Rooms Charged')
   },
   methods: {
     openModal() {
@@ -45,13 +54,12 @@ export default {
     },
     submitForm: function(e) {
       e.preventDefault();
-      let room = {
-                               "floor": this.floorId,
-                                  "id": this.roomId,
-                                "name": this.roomName,
-
-      };
-      this.$emit('form-submitted', room);
+      let roomData = {  "id": this.roomId,
+                        "name": this.roomName};
+      //console.log(roomData)
+      this.$emit('form-submitted', roomData);
+      let index = this.rooms.findIndex(room => room.id === this.roomId);
+      this.rooms[index].name = roomData.name;
     }
   }
 }

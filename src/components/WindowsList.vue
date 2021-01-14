@@ -20,7 +20,7 @@
     </div>
     <div class="col-md-3 center">
       <div class="card min-height">
-    <windows-update @form-submitted="submitForm"></windows-update>
+    <windows-update @form-submitted="updateName"></windows-update>
       </div>
     </div>
   </div>
@@ -67,6 +67,13 @@ export default {
       } else {
         this.windows.splice(index, 1, newWindow);
       }
+    },
+    async updateName(winData) {
+      let response = await axios.put(`${API_HOST}/api/windows/${winData.id}/updateName/${winData.name}`);
+      let upWin = response.data;
+      let index = this.windows.findIndex(window => window.id === upWin.id);
+      this.windows[index].name = upWin.name;
+      Vue.$toast.info('Name Updated!')
     },
     async submitForm(window) {
       let response = await axios.post(`${API_HOST}/api/windows`,window);

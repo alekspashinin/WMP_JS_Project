@@ -3,18 +3,17 @@
     <h3>Rename Windows</h3>
     <label for="window-id">Window :</label>
     <select class="select2 w-100" id="window-id" name="window-id" v-model="windowId">
-      <option value="1">Window 1</option>
-      <option value="2">Window 2</option>
-      <option value="3">Window 3</option>
+      <option v-for="window in windows" :value="window.id">{{ window.name }}</option>
     </select>
     <br>
-    <label for="room-id">Room :</label>
-    <select class="select2 w-100" id="room-id" name="room-id" v-model="roomId">
+
+    <!-- <label for="room-id">Room :</label>
+    <select class="select2 w-100" id="window-id" name="window-id" v-model="roomId">
       <option value="1">Room 1</option>
       <option value="2">Room 2</option>
       <option value="3">Room 3</option>
     </select>
-    <br>
+    <br> -->
     <label for="window-new-name">New Name :</label>
     <input class="select2 w-100" id="window-new-name" type="text" name="window-new-name" v-model="windowNewName">
     <br>
@@ -24,6 +23,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {API_HOST} from '../config';
 import Vue from 'vue'
 import VueToast from 'vue-toast-notification';
 
@@ -33,18 +34,25 @@ export default {
   name: 'WindowsUpdate',
   data: function() {
     return {
+      windows: [],
       windowId: '',
       roomId: '',
       windowNewName: ''
     }
   },
+  created: async function() {
+    let response = await axios.get(`${API_HOST}/api/windows`);
+    let windows = response.data;
+    this.windows = windows;
+  },
   methods: {
     submitForm: function(e) {
       e.preventDefault();
-      let window = { "id": this.windowId,
-                   "name": this.windowNewName,
-                 "roomId": this.roomId };
-      this.$emit('form-submitted', window);
+      let winData = {   "id": this.windowId,
+                        "name": this.windowNewName};
+      this.$emit('form-submitted', winData);
+      let index = this.windows.findIndex(window => window.id === this.windowId);
+      this.windows[index].name = winData.name;
     }
   }
 }
