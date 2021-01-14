@@ -12,8 +12,9 @@
     <windows-list-item
         v-for="window in windows"
         :window="window"
-        :key="'999'+ window.id"
+        :key="window.id"
         @window-updated="updateWindow"
+        @window-deleted="deleteWindow"
     >
     </windows-list-item>
       </div>
@@ -60,6 +61,11 @@ export default {
     Vue.$toast.info('List of Windows Charged');
   },
   methods: {
+    deleteWindow(id) {
+    console.log(id)
+      let index = this.windows.findIndex(window => window.id === id);
+      this.windows.splice(index, 1);
+    },
     updateWindow(newWindow) {
       let index = this.windows.findIndex(window => window.id === newWindow.id);
       if (newWindow === '') {
