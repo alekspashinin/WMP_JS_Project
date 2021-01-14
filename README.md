@@ -1,4 +1,9 @@
-# untitled4
+# JavaScript project of the WMP Course 
+
+This project aims to design a Front-End based on JavaScript. The Members of the team are: Aleksei PASHININ, Leo THEODON, and Hamed RAHIMI. The Tutor of the course is Prof. Maxime Lefrancois at Ecole Des Mines de Saint Etienne, France.
+
+Some Comments are as follows:
+
 
 ## Project setup
 ```
