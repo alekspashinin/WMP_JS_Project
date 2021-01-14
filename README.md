@@ -14,7 +14,7 @@ This project aims to design a Front-End based on JavaScript. The Members of the 
 * Get messages with vue-toasted library
 * Design and animation
 
-# Deplyement of Program
+# Deployment of Program
 
 Some Comments are as follows:
 
