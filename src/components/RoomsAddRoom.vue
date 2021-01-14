@@ -43,12 +43,13 @@ export default {
     },
     submitForm: function(e) {
       e.preventDefault();
-      let room = { "currentTemperature": this.currentTemperature,
-                                "floor": this.floorId,
-                                   "id": null,
-                                 "name": this.roomId,
-                    "targetTemperature": this.targetTemperature
+      let room = {  "id": null,
+                    "name": this.roomId,
+                    "currentTemperature": this.currentTemperature,
+                    "targetTemperature": this.targetTemperature,
+                    "floor": this.floorId
       };
+      console.log(room);
       this.$emit('form-submitted', room);
     }
   }

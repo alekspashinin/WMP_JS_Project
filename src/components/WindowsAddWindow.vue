@@ -11,9 +11,7 @@
     <br>
     <label for="room-id">Room :</label>
     <select class="select2 w-100" id="room-id" name="room-id" v-model="roomId">
-      <option value="1">Room 1</option>
-      <option value="2">Room 2</option>
-      <option value="3">Room 3</option>
+      <option v-for="room in rooms" :value="room.id">{{ room.name }}</option>
     </select>
     <br>
     <br>
@@ -22,6 +20,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {API_HOST} from '../config';
 import Vue from 'vue'
 import VueToast from 'vue-toast-notification';
 
@@ -31,19 +31,26 @@ export default {
   name: 'WindowsAddWindow',
   data: function() {
     return {
+      rooms: [],
       windowId: '',
       windowStatus: '',
       roomId: ''
     }
   },
+  created: async function() {
+    let response = await axios.get(`${API_HOST}/api/rooms`);
+    let rooms = response.data;
+    this.rooms = rooms;
+  },
   methods: {
     submitForm: function(e) {
       e.preventDefault();
       let window = { "id": null,
-                   "name": this.windowId,
-                 "roomId": this.roomId,
-           "windowStatus": this.windowStatus
+                  "name": this.windowId,
+                  "windowStatus": this.windowStatus,
+                  "roomId": this.roomId
       };
+      console.log(window)
       this.$emit('form-submitted', window);
       if(this.$emit('form-submitted', window)) {
         Vue.$toast.success('Window Created');

@@ -70,6 +70,7 @@ export default {
       Vue.$toast.info('Name Updated!')
     },
     async submitForm(room) {
+      console.log(room);
       let response = await axios.post(`${API_HOST}/api/rooms`,room);
       let newRoom = response.data;
       this.rooms.push(newRoom);
