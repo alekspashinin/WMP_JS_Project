@@ -60,7 +60,7 @@ export default {
       let index = this.roomsx.findIndex(room => room.id === this.roomId);
       this.roomsx[index].name = roomData.name;
     },
-    async UpdateList(newWindow){
+    async UpdateList(){
       let response = await axios.get(`${API_HOST}/api/rooms`);
       let roomsx = response.data;
       this.roomsx = roomsx;

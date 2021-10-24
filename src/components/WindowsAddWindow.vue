@@ -58,7 +58,7 @@ export default {
       else{
         Vue.$toast.error('Error Creation of Window');
       }
-    }
+    },
   }
 }
 </script>
